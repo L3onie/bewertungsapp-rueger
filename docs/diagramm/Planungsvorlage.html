@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Planungsvorlage ER-Modell - Bewertungsapp</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #333; }
+        h3 { color: #333; margin-top: 25px; margin-bottom: 8px; font-size: 1.2rem; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+    <h2>Planungsvorlage ER Diagramm</h2>
+
+    <!-- Team -->
+    <h3>Team</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Spaltenname</th>
+                <th>Datentyp</th>
+                <th>Constraint / Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INTEGER</td><td>Primary Key, auto increment</td></tr>
+            <tr><td>name</td><td>STRING</td><td>NOT NULL</td></tr>
+            <tr><td>klasse</td><td>STRING</td><td>NOT NULL</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Member -->
+    <h3>Member</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Spaltenname</th>
+                <th>Datentyp</th>
+                <th>Constraint / Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INTEGER</td><td>Primary Key, auto increment</td></tr>
+            <tr><td>vorname</td><td>STRING</td><td>NOT NULL</td></tr>
+            <tr><td>nachname</td><td>STRING</td><td>NOT NULL</td></tr>
+            <tr><td>teamId</td><td>INTEGER</td><td>Foreign Key -> Team.id</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Project -->
+    <h3>Project</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Spaltenname</th>
+                <th>Datentyp</th>
+                <th>Constraint / Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INTEGER</td><td>Primary Key, auto increment</td></tr>
+            <tr><td>titel</td><td>STRING</td><td>NOT NULL</td></tr>
+            <tr><td>beschreibung</td><td>TEXT</td><td>Project description</td></tr>
+            <tr><td>praesentiertAm</td><td>DATEONLY</td><td>Presentation date</td></tr>
+            <tr><td>teamId</td><td>INTEGER</td><td>Foreign Key -> Team.id</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Criterion -->
+    <h3>Criterion</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Spaltenname</th>
+                <th>Datentyp</th>
+                <th>Constraint / Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INTEGER</td><td>Primary Key, auto increment</td></tr>
+            <tr><td>name</td><td>STRING</td><td>NOT NULL</td></tr>
+            <tr><td>maxScore</td><td>INTEGER</td><td>NOT NULL</td></tr>
+            <tr><td>weight</td><td>FLOAT</td><td>Weight factor (z. B. 1.5)</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Juror -->
+    <h3>Juror</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Spaltenname</th>
+                <th>Datentyp</th>
+                <th>Constraint / Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INTEGER</td><td>Primary Key, auto increment</td></tr>
+            <tr><td>name</td><td>STRING</td><td>NOT NULL</td></tr>
+            <tr><td>email</td><td>STRING</td><td>UNIQUE, NOT NULL</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Evaluation -->
+    <h3>Evaluation</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Spaltenname</th>
+                <th>Datentyp</th>
+                <th>Constraint / Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INTEGER</td><td>Primary Key, auto increment</td></tr>
+            <tr><td>score</td><td>INTEGER</td><td>Evaluation score</td></tr>
+            <tr><td>comment</td><td>TEXT</td><td>Evaluation comment</td></tr>
+            <tr><td>projectId</td><td>INTEGER</td><td>Foreign Key -> Project.id</td></tr>
+            <tr><td>criterionId</td><td>INTEGER</td><td>Foreign Key -> Criterion.id</td></tr>
+            <tr><td>jurorId</td><td>INTEGER</td><td>Foreign Key -> Juror.id</td></tr>
+            <tr><td>(projectId, criterionId, jurorId)</td><td>COMPOSITE</td><td>UNIQUE (prevent duplicate evaluation)</td></tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
