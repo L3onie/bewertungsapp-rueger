@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const { Project, Team } = db;
+const { Project, Team, Member } = db;
 
 // Alle Projekte inkl. Team
 router.get('/', async (req, res) => {
   try {
-    const projects = await Project.findAll({ include: Team });
+    const projects = await Project.findAll({ include: [{ model: Team, include: [Member] }] });
     res.json(projects);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 // Ein Projekt per ID
 router.get('/:id', async (req, res) => {
   try {
-    const project = await Project.findByPk(req.params.id, { include: Team });
+    const project = await Project.findByPk(req.params.id, { include: [{ model: Team, include: [Member] }] });
     if (!project) return res.status(404).json({ error: 'Projekt nicht gefunden' });
     res.json(project);
   } catch (error) {

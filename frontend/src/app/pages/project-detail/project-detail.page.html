@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/project-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ project()?.titel }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (error()) {
+    <p>{{ error() }}</p>
+  }
+
+  @if (project(); as p) {
+    <h2>{{ p.titel }}</h2>
+    <p>{{ p.beschreibung }}</p>
+    <p>Präsentiert am: {{ p.praesentiertAm }}</p>
+
+    <h3>{{ p.Team?.name }} ({{ p.Team?.klasse }})</h3>
+    <ion-list>
+      @for (m of p.Team?.Members ?? []; track m.id) {
+        <ion-item>
+          <ion-label>{{ m.vorname }} {{ m.nachname }}</ion-label>
+        </ion-item>
+      }
+    </ion-list>
+
+    <h3>Bewertungen</h3>
+    <p>Noch keine Bewertungen vorhanden.</p>
+  }
+</ion-content>

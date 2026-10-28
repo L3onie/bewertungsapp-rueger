@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Projekte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (error()) {
+    <p class="ion-padding">{{ error() }}</p>
+  }
+
+  <ion-list>
+    @for (p of projects(); track p.id) {
+      <ion-item [routerLink]="['/project-detail', p.id]">
+        <ion-label>
+          <h2>{{ p.titel }}</h2>
+          <p>{{ p.Team?.name }} ({{ p.Team?.klasse }})</p>
+        </ion-label>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>
